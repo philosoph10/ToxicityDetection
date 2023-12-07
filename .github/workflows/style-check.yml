@@ -3,7 +3,7 @@ name: Style Check
 on:
   push:
     branches:
-      - style-check
+      - main
 
 jobs:
   style-check:
