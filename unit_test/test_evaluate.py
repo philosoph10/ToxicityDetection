@@ -3,7 +3,7 @@ import numpy as np
 # from sklearn.linear_model import LogisticRegression
 # from sklearn.multioutput import MultiOutputClassifier
 
-from utils.evaluate import mean_roc_auc # , cross_validate
+from utils.evaluate import mean_roc_auc  # , cross_validate
 # from utils.model import ToxicityDetector
 
 
