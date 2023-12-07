@@ -49,9 +49,6 @@ class ToxicityDetector:
         :param X: Feature vector
         :return: Predictions
         """
-        # Embed the texts
-        embeddings_X = self.model.encode(X)
-
         probs = np.array(self.predict_proba(X))
 
         preds = np.zeros((X.shape[0], 6))
