@@ -13,8 +13,8 @@ def test_main():
 
     # use the default params
     args = NamespaceObject(target_size=20000, target_dir='../data')
-    
-    data_train = pd.read_csv('../data/train.csv')
+
+    data_train = pd.read_csv('./data/train.csv')
 
     main(args, data_train)
 
