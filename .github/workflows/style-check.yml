@@ -1,6 +1,9 @@
 name: Style Check
 
-on: [pull_request]
+on:
+  push:
+    branches:
+      - origin/style-check
 
 jobs:
   style-check:
