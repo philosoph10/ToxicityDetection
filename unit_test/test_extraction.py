@@ -12,7 +12,7 @@ def test_main():
             self.__dict__.update(kwargs)
 
     # use the default params
-    args = NamespaceObject(target_size=20000, target_dir='./data')
+    args = NamespaceObject(target_size=20000, target_dir='../data')
 
     main(args)
 
