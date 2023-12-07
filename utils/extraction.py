@@ -20,10 +20,11 @@ def parse_arguments():
     return args_parsed
 
 
-if __name__ == '__main__':
-    # parse cmd arguments
-    args = parse_arguments()
-
+def main(args):
+    """
+    Perform the extraction
+    :param args: parsed cmd arguments
+    """
     # read 160k texts
     data_train = pd.read_csv('./data/train.csv')
 
@@ -59,3 +60,13 @@ if __name__ == '__main__':
     print(f"#non-toxic rows = {zeros.shape[0]}")
     print(f"#toxic rows = {bad_messages.shape[0]}")
     print(f"#non-toxic rows used = {num_non_toxic_rows_to_extract}")
+
+
+if __name__ == '__main__':
+    # parse cmd arguments
+    args_cmd = parse_arguments()
+
+    print(args_cmd)
+
+    # extract essential data
+    main(args_cmd)

@@ -1,4 +1,4 @@
-from utils.cleaning import remove_special_symbols
+from utils.cleaning import remove_special_symbols, remove_stopwords
 
 
 def test_remove_special_symbols():
@@ -17,3 +17,14 @@ def test_remove_special_symbols():
 
     # Test with a string containing only whitespace
     assert remove_special_symbols(["  \t  "]) == [""]
+
+
+def test_remove_stopwords():
+    # Test with an empty string
+    assert remove_stopwords([""]) == [""]
+
+    # Test with multiple texts
+    assert remove_stopwords(["The cat in a hat", "the"]) == ["cat hat", ""]
+
+    # Test with wild cases
+    assert remove_stopwords(["tHe CAT IN a HaT"]) == ["cat hat"]
