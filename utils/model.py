@@ -21,7 +21,7 @@ class ToxicityDetector:
         :param model_name: Model for embedding the text, default='intfloat/multilingual-e5-base'
         """
         self.model_name = model_name
-        self.model = SentenceTransformer(model_name)
+        self.model = None
         self.classifier = MultiOutputClassifier(LogisticRegression(class_weight='balanced', random_state=42))
         self.ml_classifier = ToxicityDetector.get_ml_model()
 
@@ -31,6 +31,8 @@ class ToxicityDetector:
         :param X: Training data
         :param y: Labels
         """
+        self.model = SentenceTransformer(self.model_name)
+
         # Embed the texts
         embeddings_X = self.model.encode(X)
 
@@ -46,10 +48,12 @@ class ToxicityDetector:
     def predict(self, X):
         """
         Perform inference
-        :param X: Feature vector
+        :param X: Input text
         :return: Predictions
         """
         probs = np.array(self.predict_proba(X))
+
+        X = np.array(X)
 
         preds = np.zeros((X.shape[0], 6))
 
@@ -63,7 +67,7 @@ class ToxicityDetector:
     def predict_proba(self, X):
         """
         Find probabilities of labels
-        :param X: Feature vector
+        :param X: Input text
         :return: Probabilities for output labels
         """
         # Embed the texts
