@@ -5,6 +5,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.feature_selection import SelectKBest, chi2
 from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
+import os
+import joblib
 from utils.cleaning import remove_special_symbols, remove_stopwords
 
 
@@ -102,6 +104,48 @@ class ToxicityDetector:
             ('select', SelectKBest(chi2, k=2500)),
             ('moc', MultiOutputClassifier(estimator=LogisticRegression(class_weight='balanced')))
         ])
+
+    def save(self, save_dir):
+        """
+        Save the ToxicityDetector model to the specified directory.
+        :param save_dir: Directory to save the model
+        """
+        # Create the save directory if it doesn't exist
+        os.makedirs(save_dir, exist_ok=True)
+
+        # Save model name to a text file
+        model_name_path = os.path.join(save_dir, 'model_name.txt')
+        with open(model_name_path, 'w') as f:
+            f.write(self.model_name)
+
+        # Save sklearn pipeline
+        sklearn_pipeline_path = os.path.join(save_dir, 'sklearn_pipeline.joblib')
+        joblib.dump(self.ml_classifier, sklearn_pipeline_path)
+
+        # Save MultiOutputClassifier
+        multioutput_classifier_path = os.path.join(save_dir, 'multioutput_classifier.joblib')
+        joblib.dump(self.classifier, multioutput_classifier_path)
+
+    def load(self, load_dir):
+        """
+        Load the ToxicityDetector model from the specified directory.
+        :param load_dir: Directory containing the saved model components
+        """
+        # Load model name from the text file
+        model_name_path = os.path.join(load_dir, 'model_name.txt')
+        with open(model_name_path, 'r') as f:
+            self.model_name = f.read().strip()
+
+        # Re-instantiate Sentence Transformer model based on the loaded model name
+        self.model = SentenceTransformer(self.model_name)
+
+        # Load sklearn pipeline
+        sklearn_pipeline_path = os.path.join(load_dir, 'sklearn_pipeline.joblib')
+        self.ml_classifier = joblib.load(sklearn_pipeline_path)
+
+        # Load MultiOutputClassifier
+        multioutput_classifier_path = os.path.join(load_dir, 'multioutput_classifier.joblib')
+        self.classifier = joblib.load(multioutput_classifier_path)
 
     def get_params(self, deep=True):
         """
