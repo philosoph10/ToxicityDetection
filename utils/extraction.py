@@ -20,14 +20,12 @@ def parse_arguments():
     return args_parsed
 
 
-def main(args):
+def main(args, data_train):
     """
     Perform the extraction
     :param args: parsed cmd arguments
+    :param data_train: all data
     """
-    # read 160k texts
-    data_train = pd.read_csv('./data/train.csv')
-
     # define the label columns
     cols = ['toxic', 'severe_toxic', 'obscene', 'threat', 'insult', 'identity_hate']
 
@@ -50,7 +48,7 @@ def main(args):
     # define the extracted dataframe and save it
     extracted_df = pd.concat([sample_good, bad_messages])
     tgt_dir = args.target_dir
-    if tgt_dir[-4:] != '.csv':
+    if len(tgt_dir) < 4 or tgt_dir[-4:] != '.csv':
         os.makedirs(args.target_dir, exist_ok=True)
         tgt_dir = os.path.join(tgt_dir, 'Smart_Subset.csv')
     extracted_df.to_csv(tgt_dir)
@@ -66,7 +64,8 @@ if __name__ == '__main__':
     # parse cmd arguments
     args_cmd = parse_arguments()
 
-    print(args_cmd)
+    # read 160k texts
+    data = pd.read_csv('./data/train.csv')
 
     # extract essential data
-    main(args_cmd)
+    main(args_cmd, data)

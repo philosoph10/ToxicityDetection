@@ -13,8 +13,10 @@ def test_main():
 
     # use the default params
     args = NamespaceObject(target_size=20000, target_dir='../data')
+    
+    data_train = pd.read_csv('../data/train.csv')
 
-    main(args)
+    main(args, data_train)
 
     # check that the dataframe was created
     data_path = './data/Smart_Subset.csv'
