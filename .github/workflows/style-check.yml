@@ -3,7 +3,7 @@ name: Style Check
 on:
   push:
     branches:
-      - origin/style-check
+      - style-check
 
 jobs:
   style-check:
@@ -29,4 +29,4 @@ jobs:
 
       - name: Run Style Check
         run: |
-          ruff check  # Replace with the actual command for style checking
+          ruff check
