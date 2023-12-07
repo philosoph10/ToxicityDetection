@@ -48,7 +48,7 @@ The project is organized into several folders:
   - Holds a pretrained model ready for inference.
   - Load the model like this:
     ```python
-    from toxicity_detector import ToxicityDetector
+    from utils.model import ToxicityDetector
     detector = ToxicityDetector()
     detector.load('./config/best_model')
     ```
