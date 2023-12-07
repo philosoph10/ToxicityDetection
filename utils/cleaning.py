@@ -9,17 +9,18 @@ stopwords = set(stopwords.words('english'))
 
 def remove_special_symbols(texts):
     """
-    remove special symbols - everything but letters, digits, and whitespaces
+    remove special symbols - everything but letters and whitespaces
     :param texts: a list of strings
     :return: a list of filtered texts
     """
-    special_symbol_pattern = r'[^A-Za-z\s]'  # anything that is not a letter, digit, or whitespace
+    special_symbol_pattern = r'[^A-Za-z\s]'  # anything that is not a letter or whitespace
 
     filtered_texts = []
 
     for text in texts:
         filtered_text = re.sub(special_symbol_pattern, '', text)
-        filtered_texts.append(filtered_text)
+        filtered_text = re.sub(' +', ' ', filtered_text)
+        filtered_texts.append(filtered_text.strip())
 
     return filtered_texts
 
